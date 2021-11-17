@@ -5,7 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 export const Login = () => {
-    const schema = yup.object().shape()
+    const schema = yup.object().shape({
+        login: yup.string().required("Campo obrigatório"),
+        password: yup.string().required("Campo obrigatório")
+    })
 
     
   return (
