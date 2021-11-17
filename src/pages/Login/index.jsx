@@ -3,14 +3,39 @@ import Logo from "../../assets/logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { api } from "../../services/api";
+import { useHistory } from "react-router";
 
 export const Login = () => {
-    const schema = yup.object().shape({
-        login: yup.string().required("Campo obrigatório"),
-        password: yup.string().required("Campo obrigatório")
-    })
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Digite um e-mail válido")
+      .required("Campo obrigatório"),
+    password: yup
+      .string()
+      .min(6, "Digite no mínimo 6 caracteres")
+      .required("Campo obrigatório"),
+  });
 
-    
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleSignIn = (data) => {
+      console.log(data)
+    api
+      .post("/sessions", data)
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
+  };
+
+  const history = useHistory();
+
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>
       <Box
@@ -21,16 +46,37 @@ export const Login = () => {
           height: 40,
         }}
       ></Box>
-      <Box component="form">
-        <TextField margin="normal" fullWidth label="Login" />
-        <TextField margin="normal" fullWidth label="Senha" type="password" />
+      <Box onSubmit={handleSubmit(handleSignIn)} component="form">
+        <TextField
+          {...register("email")}
+          margin="normal"
+          fullWidth
+          label="Login"
+          type="email"
+          helperText={errors.email?.message}
+          error={!!errors.email?.message}
+        />
+        <TextField
+          {...register("password")}
+          margin="normal"
+          fullWidth
+          label="Senha"
+          type="password"
+          helperText={errors.password?.message}
+          error={!!errors.password?.message}
+        />
         <Button type="submit" fullWidth variant="contained">
           Logar
         </Button>
         <Typography>
           Criar uma página para mostrar suas habilidades metas e progresso
         </Typography>
-        <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+        <Button
+          onClick={() => history.push("/signup")}
+          fullWidth
+          variant="contained"
+          sx={{ mt: 2 }}
+        >
           Cadastrar
         </Button>
       </Box>
