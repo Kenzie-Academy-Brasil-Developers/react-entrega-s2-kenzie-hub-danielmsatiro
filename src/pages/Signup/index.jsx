@@ -50,12 +50,13 @@ export const Signup = () => {
 
   const handleSignUp = (data) => {
     const newData = { ...data, course_module: module };
+    delete newData.confirm_password
     console.log(newData);
+    api
+        .post("/users", newData)
+        .then((response) => console.log(response.data))
+        .catch((err) => console.log(err))
   };
-  /* api
-      .post("/sessions", data)
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err)) */
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>
@@ -110,11 +111,11 @@ export const Signup = () => {
           onChange={handleChange}
           value={module}
         >
-          {/* <Tooltip title="Primeiro módulo (Introdução ao Frontend)">
-            <div></div></Tooltip> */}
+         {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
           <ToggleButton value="Primeiro módulo (Introdução ao Frontend)">
             Primeiro
           </ToggleButton>
+            {/* </Tooltip> */}
           
           <ToggleButton value="Segundo módulo (Frontend Avançado)">
             Segundo
