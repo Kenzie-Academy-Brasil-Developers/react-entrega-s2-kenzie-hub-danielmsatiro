@@ -1,10 +1,18 @@
-import { Container, Box, TextField, Button } from "@mui/material";
+import {
+  Container,
+  Box,
+  TextField,
+  Button,
+  FormLabel,
+  Tooltip,
+} from "@mui/material";
 import Logo from "../../assets/logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-/* import { api } from "../../services/api"; */
+import { api } from "../../services/api";
+import { useState } from "react";
 
 export const Signup = () => {
   const schema = yup.object().shape({
@@ -15,7 +23,6 @@ export const Signup = () => {
       .required("Campo obrigatório"),
     bio: yup.string(),
     contact: yup.string().required("Campo obrigatório"),
-    course_module: yup.string().required("Campo obrigatório"),
     password: yup
       .string()
       .min(6, "Digite no mínimo 6 caracteres")
@@ -33,13 +40,22 @@ export const Signup = () => {
     resolver: yupResolver(schema),
   });
 
+  const [module, setModule] = useState(
+    "Primeiro módulo (Introdução ao Frontend)"
+  );
+
+  const handleChange = (event, newModule) => {
+    setModule(newModule);
+  };
+
   const handleSignUp = (data) => {
-    console.log(data);
-    /* api
+    const newData = { ...data, course_module: module };
+    console.log(newData);
+  };
+  /* api
       .post("/sessions", data)
       .then((response) => console.log(response.data))
       .catch((err) => console.log(err)) */
-  };
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>
@@ -85,16 +101,21 @@ export const Signup = () => {
           helperText={errors.contact?.message}
           error={!!errors.contact?.message}
         />
+
+        <FormLabel component="legend">Selecionar módulo:</FormLabel>
         <ToggleButtonGroup
-          {...register("course_module")}
+          exclusive
           color="primary"
           fullWidth
-          margin="normal"
-          label="Selecionar módulo do curso"
+          onChange={handleChange}
+          value={module}
         >
+          {/* <Tooltip title="Primeiro módulo (Introdução ao Frontend)">
+            <div></div></Tooltip> */}
           <ToggleButton value="Primeiro módulo (Introdução ao Frontend)">
             Primeiro
           </ToggleButton>
+          
           <ToggleButton value="Segundo módulo (Frontend Avançado)">
             Segundo
           </ToggleButton>
@@ -105,8 +126,6 @@ export const Signup = () => {
             Quarto
           </ToggleButton>
         </ToggleButtonGroup>
-
-        {/* incluir selecionar o módulo do curso */}
 
         <TextField
           {...register("password")}
