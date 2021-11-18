@@ -4,9 +4,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 
-export const Login = () => {
+export const Login = ({ authenticated, setAuthenticated }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -27,14 +27,26 @@ export const Login = () => {
   });
 
   const handleSignIn = (data) => {
-      console.log(data)
+    console.log(data);
     api
       .post("/sessions", data)
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        const { token } = response.data;
+
+        localStorage.setItem("@Kenziehub:token", JSON.stringify(token));
+
+        setAuthenticated(true);
+
+        return history.push("/dashboard");
+      })
       .catch((err) => console.log(err));
   };
 
   const history = useHistory();
+
+  if (authenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>

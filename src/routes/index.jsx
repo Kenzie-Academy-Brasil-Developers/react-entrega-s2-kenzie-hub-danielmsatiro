@@ -1,21 +1,33 @@
-import { Route, Switch } from "react-router"
-import { Dashboard } from "../pages/Dashboard"
-import { Login } from "../pages/Login"
-import { Signup } from "../pages/Signup"
-
+import { useEffect, useState } from "react";
+import { Route, Switch } from "react-router";
+import { Dashboard } from "../pages/Dashboard";
+import { Login } from "../pages/Login";
+import { Signup } from "../pages/Signup";
 
 export const Routes = () => {
-    return (
-        <Switch>
-            <Route exact path="/">
-                <Login />
-            </Route>
-            <Route exact path="/signup">
-                <Signup />
-            </Route>
-            <Route exact path="/dashbord">
-                <Dashboard />
-            </Route>
-        </Switch>
-    )
-}
+  const [authenticated, setAuthenticated] = useState(false);
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
+
+    if (token) {
+      return setAuthenticated(true);
+    }
+  },[authenticated]);
+
+  return (
+    <Switch>
+      <Route exact path="/">
+        <Login
+          authenticated={authenticated}
+          setAuthenticated={setAuthenticated}
+        />
+      </Route>
+      <Route exact path="/signup">
+        <Signup />
+      </Route>
+      <Route exact path="/dashboard">
+        <Dashboard authenticated={authenticated}/>
+      </Route>
+    </Switch>
+  );
+};

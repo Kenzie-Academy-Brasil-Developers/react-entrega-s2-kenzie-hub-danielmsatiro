@@ -54,8 +54,16 @@ export const Signup = () => {
     console.log(newData);
     api
         .post("/users", newData)
-        .then((response) => console.log(response.data))
-        .catch((err) => console.log(err))
+        .then((response) => {
+          /* Incluir resposta de sucesso com link para
+          direcionar o usuário para o login.
+          Em caso de sucesso, setar o usuário como autenticado*/
+          console.log(response.data)
+        })
+        .catch((err) => {
+          /* Incluir resposta para o usuário caso dê errado */
+          console.log(err)
+        })
   };
 
   return (

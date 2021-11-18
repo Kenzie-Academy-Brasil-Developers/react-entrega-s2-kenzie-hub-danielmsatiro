@@ -1,5 +1,12 @@
-export const Dashboard = () => {
+import { Redirect } from "react-router"
+
+export const Dashboard = ({authenticated}) => {
+
+    if (!authenticated) {
+        return <Redirect to="/" />;
+      }
+
     return (
-        <div>Dashboard</div>
+        <h2>Dashboard</h2>
     )
 }
