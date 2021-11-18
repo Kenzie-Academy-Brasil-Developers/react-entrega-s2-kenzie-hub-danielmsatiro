@@ -1,6 +1,8 @@
 import { Redirect } from "react-router";
-import { Container, Grid, Paper, Box, Avatar } from "@mui/material";
+import { Container, Grid, Paper, Box, Avatar, Typography } from "@mui/material";
 import Logo from "../../assets/logo.svg";
+import { Technologys } from "../../components/Technologys";
+import { BsFillPlusSquareFill } from "react-icons/bs"
 
 export const Dashboard = ({ authenticated }) => {
   if (!authenticated) {
@@ -14,9 +16,7 @@ export const Dashboard = ({ authenticated }) => {
           <Paper>
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Paper>
-                   Logo
-                </Paper>
+                <Paper>Logo</Paper>
               </Grid>
               <Grid item>
                 <Avatar alt="" src="" />
@@ -25,7 +25,17 @@ export const Dashboard = ({ authenticated }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Paper>Minhas Tecnologias</Paper>
+          <Paper>
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography>Minhas Tecnologias</Typography>
+              </Grid>
+              <Grid item>
+                <BsFillPlusSquareFill />
+              </Grid>
+            </Grid>
+            <Technologys title={"Javascript"} status={"intermediário"} />
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper>Meus Trabalhos</Paper>

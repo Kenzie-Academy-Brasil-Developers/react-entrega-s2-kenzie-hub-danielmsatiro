@@ -33,6 +33,8 @@ export const Login = ({ authenticated, setAuthenticated }) => {
       .then((response) => {
         const { token } = response.data;
 
+        localStorage.clear();
+
         localStorage.setItem("@Kenziehub:token", JSON.stringify(token));
 
         setAuthenticated(true);
