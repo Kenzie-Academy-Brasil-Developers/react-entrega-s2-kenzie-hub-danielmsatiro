@@ -2,7 +2,7 @@ import { Grid, Typography, styled, ButtonBase } from "@mui/material";
 import { useState } from "react";
 import { FiCodesandbox } from "react-icons/fi";
 
-export const Technologys = ({ title, status }) => {
+export const Technologies = ({ title, status }) => {
   const [color, setColor] = useState("#E7F5EF");
   const Border = styled("div")(() => ({
     width: 4,

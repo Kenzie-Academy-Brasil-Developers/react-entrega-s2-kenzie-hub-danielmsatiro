@@ -31,11 +31,12 @@ export const Login = ({ authenticated, setAuthenticated }) => {
     api
       .post("/sessions", data)
       .then((response) => {
-        const { token } = response.data;
+        const { token, user } = response.data;
 
         localStorage.clear();
 
         localStorage.setItem("@Kenziehub:token", JSON.stringify(token));
+        localStorage.setItem("@Kenziehub:id", JSON.stringify(user.id));
 
         setAuthenticated(true);
 
