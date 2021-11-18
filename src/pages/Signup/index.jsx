@@ -71,7 +71,6 @@ export const Signup = () => {
       <Box
         component="div"
         sx={{
-          display: "flex",
           background: `url(${Logo}) no-repeat center`,
           height: 40,
         }}

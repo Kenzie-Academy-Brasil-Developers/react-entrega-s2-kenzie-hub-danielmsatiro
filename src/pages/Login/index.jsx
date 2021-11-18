@@ -53,7 +53,6 @@ export const Login = ({ authenticated, setAuthenticated }) => {
       <Box
         component="div"
         sx={{
-          display: "flex",
           background: `url(${Logo}) no-repeat center`,
           height: 40,
         }}
