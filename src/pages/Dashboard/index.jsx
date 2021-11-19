@@ -8,6 +8,7 @@ import {
   Avatar,
   Typography,
   IconButton,
+  Button,
 } from "@mui/material";
 import { Technologies } from "../../components/Technologies";
 import { BsFillPlusSquareFill } from "react-icons/bs";
@@ -52,6 +53,11 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
   if (!authenticated) {
     return <Redirect to="/" />;
   }
+
+  const logOut = () => {
+    localStorage.clear();
+    setAuthenticated(false);
+  };
 
   return (
     <Container component="main">
@@ -113,7 +119,13 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
               height: "100%",
             }}
           >
-            aside
+            <Typography>{user.name}</Typography>
+            <Typography>{user.course_module}</Typography>
+            <Typography>contato</Typography>
+            <Typography>{user.contact}</Typography>
+            <Typography>E-mail</Typography>
+            <Typography>{user.email}</Typography>
+            <Button onClick={() => logOut()}>Sair</Button>
           </Paper>
         </Grid>
       </Grid>

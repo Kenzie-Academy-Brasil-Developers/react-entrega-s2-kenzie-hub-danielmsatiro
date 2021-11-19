@@ -47,30 +47,32 @@ export const Signup = () => {
   );
 
   const handleChange = (event, newModule) => {
-    setModule(newModule);
+    if (newModule !== null) {
+      setModule(newModule);
+    }
   };
 
   const handleSignUp = (data) => {
     const newData = { ...data, course_module: module };
-    delete newData.confirm_password
+    delete newData.confirm_password;
     console.log(newData);
     api
-        .post("/users", newData)
-        .then((response) => {
-          /* Incluir resposta de sucesso com link para
+      .post("/users", newData)
+      .then((response) => {
+        /* Incluir resposta de sucesso com link para
           direcionar o usuário para o login.
           Em caso de sucesso, setar o usuário como autenticado*/
-          console.log(response.data)
-          toast.success('Yeesss! Tudo certinho!')
-          return history.push(`/`)
-        })
-        .catch((err) => {
-          /* Incluir resposta para o usuário caso dê errado */
-          toast.error('Ops! Alguém já deve ter esse E-mail...')
-        })
+        console.log(response.data);
+        toast.success("Yeesss! Tudo certinho!");
+        return history.push(`/`);
+      })
+      .catch((err) => {
+        /* Incluir resposta para o usuário caso dê errado */
+        toast.error("Ops! Alguém já deve ter esse E-mail...");
+      });
   };
 
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>
@@ -95,9 +97,8 @@ export const Signup = () => {
           margin="normal"
           fullWidth
           label="Email"
-          type="email"
-          helperText={errors.login?.message}
-          error={!!errors.login?.message}
+          helperText={errors.email?.message}
+          error={!!errors.email?.message}
         />
         <TextField
           {...register("bio")}
@@ -124,12 +125,12 @@ export const Signup = () => {
           onChange={handleChange}
           value={module}
         >
-         {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
+          {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
           <ToggleButton value="Primeiro módulo (Introdução ao Frontend)">
             Primeiro
           </ToggleButton>
-            {/* </Tooltip> */}
-          
+          {/* </Tooltip> */}
+
           <ToggleButton value="Segundo módulo (Frontend Avançado)">
             Segundo
           </ToggleButton>
@@ -159,7 +160,7 @@ export const Signup = () => {
           helperText={errors.confirm_password?.message}
           error={!!errors.confirm_password?.message}
         />
-        <Button type="submit" fullWidth variant="contained">
+        <Button type="submit" fullWidth secundary variant="contained">
           Cadastrar
         </Button>
       </Box>
