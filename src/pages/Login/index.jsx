@@ -27,7 +27,6 @@ export const Login = ({ authenticated, setAuthenticated }) => {
   });
 
   const handleSignIn = (data) => {
-    console.log(data);
     api
       .post("/sessions", data)
       .then((response) => {
@@ -40,7 +39,7 @@ export const Login = ({ authenticated, setAuthenticated }) => {
 
         setAuthenticated(true);
 
-        return history.push("/dashboard");
+        return history.push(`/dashboard/${user.id}`);
       })
       .catch((err) => console.log(err));
   };
@@ -48,7 +47,10 @@ export const Login = ({ authenticated, setAuthenticated }) => {
   const history = useHistory();
 
   if (authenticated) {
-    return <Redirect to="/dashboard" />;
+    const userId = JSON.parse(
+      localStorage.getItem("@Kenziehub:id", JSON.stringify("@kenziehub:id"))
+    );
+    return <Redirect to={`/dashboard/${userId}`} />;
   }
 
   return (

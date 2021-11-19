@@ -25,7 +25,7 @@ export const Routes = () => {
       <Route exact path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/dashboard">
+      <Route exact path="/dashboard/:user_id">
         <Dashboard authenticated={authenticated}/>
       </Route>
     </Switch>
