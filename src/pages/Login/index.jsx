@@ -39,7 +39,7 @@ export const Login = ({ authenticated, setAuthenticated }) => {
 
         setAuthenticated(true);
 
-        return history.push(`/dashboard/${user.id}`);
+        return history.push(`/dashboard`);
       })
       .catch((err) => console.log(err));
   };
@@ -47,10 +47,7 @@ export const Login = ({ authenticated, setAuthenticated }) => {
   const history = useHistory();
 
   if (authenticated) {
-    const userId = JSON.parse(
-      localStorage.getItem("@Kenziehub:id", JSON.stringify("@kenziehub:id"))
-    );
-    return <Redirect to={`/dashboard/${userId}`} />;
+    return <Redirect to={`/dashboard`} />;
   }
 
   return (

@@ -12,7 +12,7 @@ export const Routes = () => {
     if (token) {
       return setAuthenticated(true);
     }
-  },[authenticated]);
+  },[]);
 
   return (
     <Switch>
@@ -25,8 +25,8 @@ export const Routes = () => {
       <Route exact path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/dashboard/:user_id">
-        <Dashboard authenticated={authenticated}/>
+      <Route exact path="/dashboard">
+        <Dashboard authenticated={authenticated} setAuthenticated={setAuthenticated}/>
       </Route>
     </Switch>
   );

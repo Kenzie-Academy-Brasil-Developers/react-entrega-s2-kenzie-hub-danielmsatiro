@@ -10,6 +10,7 @@ export const CardTechCreate = ({ open, handleClose, user }) => {
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
   });
+
   const {
     register,
     handleSubmit,
@@ -17,21 +18,26 @@ export const CardTechCreate = ({ open, handleClose, user }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   const [status, setStatus] = useState("Iniciante");
+
   const handleChange = (event, newStatus) => {
     setStatus(newStatus);
   };
 
   const handleSignUp = (data) => {
     const newData = { ...data, status: status };
+    console.log(newData);
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
-    handleClose();
+    console.log({ token });
     api
       .post(`/users/techs`, newData, {
-        headers: { Authorization: `Bearer  ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => console.log(response.data))
       .catch((err) => console.log(err));
+
+    handleClose();
   };
 
   return (

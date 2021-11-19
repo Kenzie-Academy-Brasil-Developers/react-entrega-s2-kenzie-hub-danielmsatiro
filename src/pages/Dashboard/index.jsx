@@ -16,10 +16,10 @@ import { api } from "../../services/api";
 import { CardTechCreate } from "../../components/CardTechCreate";
 import Logo from "../../assets/logo.svg";
 
-export const Dashboard = ({ authenticated }) => {
+export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const [user, setUser] = useState({});
 
-  /* Abre o FormDialog */
+  /* Abre o CardTechCreate */
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -30,15 +30,14 @@ export const Dashboard = ({ authenticated }) => {
     setOpen(false);
   };
 
-  const params = useParams();
-
   useEffect(() => {
-    api.get(`/users/${params.user_id}`).then((response) => {
+    const userId = JSON.parse(
+      localStorage.getItem("@Kenziehub:id", JSON.stringify("@kenziehub:id"))
+    );
+    api.get(`/users/${userId}`).then((response) => {
       setUser(response.data);
     });
-  }, []);
-
-  console.log(user);
+  }, [open]);
 
   if (!authenticated) {
     return <Redirect to="/" />;
