@@ -4,9 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const CardTechCreate = ({ open, handleClose, updateUser }) => {
+export const CardTechCreate = ({ open, setOpen, updateUser }) => {
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
   });
@@ -20,6 +20,10 @@ export const CardTechCreate = ({ open, handleClose, updateUser }) => {
   });
 
   const [status, setStatus] = useState("Iniciante");
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event, newStatus) => {
     if(newStatus !==null) {

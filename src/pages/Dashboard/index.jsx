@@ -1,4 +1,4 @@
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -9,12 +9,12 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-/* import Logo from "../../assets/logo.svg"; */
 import { Technologies } from "../../components/Technologies";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { api } from "../../services/api";
 import { CardTechCreate } from "../../components/CardTechCreate";
 import Logo from "../../assets/logo.svg";
+import { CardTechUpdate } from "../../components/CardTechUpdate";
 
 export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const [user, setUser] = useState({});
@@ -24,15 +24,15 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   /* Abre o CardTechUpdate */
-  const handleUpdate = (tech_id) => {
-    console.log('abre CardTechUpdate',tech_id)
+  const [tech, setTech] = useState({});
+  const [openTech, setOpenTech] = useState(false);
+  const handleUpdate = (tech_id, title, status) => {
+    setTech({ tech_id, title, status });
+    setOpenTech(true);
     /* aqui eu abro o cardTechUpdate e lá dentro eu faço a requisição */
-  }
+  };
 
   /* Atualiza o state user */
   const updateUser = () => {
@@ -42,10 +42,11 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
     api.get(`/users/${userId}`).then((response) => {
       setUser(response.data);
     });
-  }
+  };
 
+  /* ciclo de via de montagem */
   useEffect(() => {
-    updateUser()
+    updateUser();
   }, []);
 
   if (!authenticated) {
@@ -116,7 +117,13 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           </Paper>
         </Grid>
       </Grid>
-      <CardTechCreate open={open} handleClose={handleClose} setUser={setUser} updateUser={updateUser}/>
+      <CardTechCreate open={open} setOpen={setOpen} updateUser={updateUser} />
+      <CardTechUpdate
+        open={openTech}
+        setOpen={setOpenTech}
+        tech={tech}
+        updateUser={updateUser}
+      />
     </Container>
   );
 };

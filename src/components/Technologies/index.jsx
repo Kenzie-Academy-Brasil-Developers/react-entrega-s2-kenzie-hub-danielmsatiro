@@ -23,7 +23,7 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
     <ButtonBase
       onMouseOver={() => setColor("green")}
       onMouseOut={() => setColor("#E7F5EF")}
-      onClick={() => handleUpdate(id)}
+      onClick={() => handleUpdate(id, title, status)}
       sx={{
         width: "100%",
         /* "&:hover": ()=>setColor("green")  */
