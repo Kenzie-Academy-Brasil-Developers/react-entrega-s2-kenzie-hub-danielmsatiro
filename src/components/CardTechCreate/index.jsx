@@ -4,9 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const CardTechCreate = ({ open, handleClose, user }) => {
+export const CardTechCreate = ({ open, handleClose, updateUser }) => {
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
   });
@@ -22,19 +22,19 @@ export const CardTechCreate = ({ open, handleClose, user }) => {
   const [status, setStatus] = useState("Iniciante");
 
   const handleChange = (event, newStatus) => {
-    setStatus(newStatus);
+    if(newStatus !==null) {
+      setStatus(newStatus);
+    }
   };
 
   const handleSignUp = (data) => {
     const newData = { ...data, status: status };
-    console.log(newData);
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
-    console.log({ token });
     api
       .post(`/users/techs`, newData, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((response) => console.log(response.data))
+      .then((response) => updateUser())
       .catch((err) => console.log(err));
 
     handleClose();

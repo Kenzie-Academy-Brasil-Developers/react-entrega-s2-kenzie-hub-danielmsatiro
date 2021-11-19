@@ -21,23 +21,32 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
 
   /* Abre o CardTechCreate */
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
+  /* Abre o CardTechUpdate */
+  const handleUpdate = (tech_id) => {
+    console.log('abre CardTechUpdate',tech_id)
+    /* aqui eu abro o cardTechUpdate e lá dentro eu faço a requisição */
+  }
+
+  /* Atualiza o state user */
+  const updateUser = () => {
     const userId = JSON.parse(
       localStorage.getItem("@Kenziehub:id", JSON.stringify("@kenziehub:id"))
     );
     api.get(`/users/${userId}`).then((response) => {
       setUser(response.data);
     });
-  }, [open]);
+  }
+
+  useEffect(() => {
+    updateUser()
+  }, []);
 
   if (!authenticated) {
     return <Redirect to="/" />;
@@ -80,6 +89,8 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                   <Technologies
                     title={item.title}
                     status={item.status}
+                    id={item.id}
+                    handleUpdate={handleUpdate}
                   />
                 </Grid>
               ))}
@@ -105,7 +116,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           </Paper>
         </Grid>
       </Grid>
-      <CardTechCreate open={open} handleClose={handleClose} user={user} />
+      <CardTechCreate open={open} handleClose={handleClose} setUser={setUser} updateUser={updateUser}/>
     </Container>
   );
 };
