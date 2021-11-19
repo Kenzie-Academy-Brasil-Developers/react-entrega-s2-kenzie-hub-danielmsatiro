@@ -118,12 +118,14 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
         </Grid>
       </Grid>
       <CardTechCreate open={open} setOpen={setOpen} updateUser={updateUser} />
-      <CardTechUpdate
-        open={openTech}
-        setOpen={setOpenTech}
-        tech={tech}
-        updateUser={updateUser}
-      />
+      {openTech && (
+        <CardTechUpdate
+          open={openTech}
+          setOpen={setOpenTech}
+          tech={tech}
+          updateUser={updateUser}
+        />
+      )}
     </Container>
   );
 };

@@ -4,20 +4,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
-  const schema = yup.object().shape({
+  /* const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
-  });
+  }); */
 
-  const {
+  /* const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-  });
+  }); */
 
   const handleClose = () => {
     setOpen(false);
@@ -31,17 +31,18 @@ export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
 
   const [status, setStatus] = useState(tech.status);
 
-  const handleSignUp = (data) => {
-    const newData = { ...data, status: status };
+  const handleUpdate = (id) => {
+    const data = { status: status };
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
     api
-      .post(`/users/techs`, newData, {
+      .put(`/users/techs/${id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((response) => updateUser())
+      .then((response) => {
+        updateUser();
+        handleClose();
+      })
       .catch((err) => console.log(err));
-
-    handleClose();
   };
 
   /* Exclui tecnologia */
@@ -60,16 +61,8 @@ export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <Box onSubmit={handleSubmit(handleSignUp)} component="form">
-        <TextField
-          {...register("title")}
-          margin="normal"
-          fullWidth
-          disabled
-          label={tech.title}
-          helperText={errors.title?.message}
-          error={!!errors.title?.message}
-        />
+      <Box component="div">
+        <TextField margin="normal" fullWidth disabled label={tech.title} />
 
         <FormLabel component="legend">Selecionar status:</FormLabel>
         <ToggleButtonGroup
@@ -87,7 +80,7 @@ export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
           <ToggleButton value="Avançado">Avançado</ToggleButton>
         </ToggleButtonGroup>
 
-        <Button type="submit" variant="contained">
+        <Button onClick={() => handleUpdate(tech.tech_id)} variant="contained">
           Salvar Alterações
         </Button>
         <Button onClick={() => deleteTech(tech.tech_id)} variant="contained">
