@@ -14,10 +14,11 @@ import { Technologies } from "../../components/Technologies";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { api } from "../../services/api";
 import { CardTechCreate } from "../../components/CardTechCreate";
+import Logo from "../../assets/logo.svg";
 
 export const Dashboard = ({ authenticated }) => {
-  const [user, setUser] = useState({})
-  
+  const [user, setUser] = useState({});
+
   /* Abre o FormDialog */
   const [open, setOpen] = useState(false);
 
@@ -32,9 +33,9 @@ export const Dashboard = ({ authenticated }) => {
   const params = useParams();
 
   useEffect(() => {
-    api
-      .get(`/users/${params.user_id}`)
-      .then((response) => setUser(response.data));
+    api.get(`/users/${params.user_id}`).then((response) => {
+      setUser(response.data);
+    });
   }, []);
 
   console.log(user);
@@ -45,21 +46,25 @@ export const Dashboard = ({ authenticated }) => {
 
   return (
     <Container component="main">
-      <Grid container spacing={4}>
+      <Grid container spacing={4} alignItems={"stretch"}>
         <Grid item xs={12}>
           <Paper>
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Paper>Logo</Paper>
+                <img width={150} alt="logo" src={Logo} />
               </Grid>
               <Grid item>
-                <Avatar alt="" src="" />
+                <Avatar alt="" src={user.avatar_url} />
               </Grid>
             </Grid>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Paper>
+          <Paper
+            sx={{
+              height: "100%",
+            }}
+          >
             <Grid container justifyContent="space-between">
               <Grid item>
                 <Typography>Minhas Tecnologias</Typography>
@@ -70,23 +75,38 @@ export const Dashboard = ({ authenticated }) => {
                 </IconButton>
               </Grid>
             </Grid>
-            {user.techs?.map((item) => (
-              <Technologies title={item.title} status={item.status} />
-            ))}
+            <Grid container spacing={1}>
+              {user.techs?.map((item) => (
+                <Grid key={item.id} item sx={{ width: "100%" }}>
+                  <Technologies
+                    title={item.title}
+                    status={item.status}
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Paper>Meus Trabalhos</Paper>
+          <Paper
+            sx={{
+              height: "100%",
+            }}
+          >
+            Meus Trabalhos
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Paper>aside</Paper>
+          <Paper
+            sx={{
+              height: "100%",
+            }}
+          >
+            aside
+          </Paper>
         </Grid>
       </Grid>
-      <CardTechCreate
-        open={open}
-        handleClose={handleClose}
-        user={user}
-      />
+      <CardTechCreate open={open} handleClose={handleClose} user={user} />
     </Container>
   );
 };

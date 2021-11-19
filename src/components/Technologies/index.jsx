@@ -2,7 +2,7 @@ import { Grid, Typography, styled, ButtonBase } from "@mui/material";
 import { useState } from "react";
 import { FiCodesandbox } from "react-icons/fi";
 
-export const Technologies = ({ title, status }) => {
+export const Technologies = ({ key, title, status, handleUpdate }) => {
   const [color, setColor] = useState("#E7F5EF");
   const Border = styled("div")(() => ({
     width: 4,
@@ -23,9 +23,7 @@ export const Technologies = ({ title, status }) => {
     <ButtonBase
       onMouseOver={() => setColor("green")}
       onMouseOut={() => setColor("#E7F5EF")}
-      /* onClick={() =>
-        setColor("green")
-      }  */
+      onClick={() => handleUpdate(key)}
       sx={{
         width: "100%",
         /* "&:hover": ()=>setColor("green")  */

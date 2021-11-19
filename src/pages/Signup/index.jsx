@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useHistory } from "react-router";
 
 export const Signup = () => {
   const schema = yup.object().shape({
@@ -59,12 +61,16 @@ export const Signup = () => {
           direcionar o usuário para o login.
           Em caso de sucesso, setar o usuário como autenticado*/
           console.log(response.data)
+          toast.success('Yeesss! Tudo certinho!')
+          return history.push(`/`)
         })
         .catch((err) => {
           /* Incluir resposta para o usuário caso dê errado */
-          console.log(err)
+          toast.error('Ops! Alguém já deve ter esse E-mail...')
         })
   };
+
+  const history = useHistory()
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>

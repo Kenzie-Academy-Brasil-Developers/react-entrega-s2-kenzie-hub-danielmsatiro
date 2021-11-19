@@ -1,11 +1,4 @@
-import {
-  Box,
-  TextField,
-  Button,
-  FormLabel,
-  Dialog,
-  DialogActions,
-} from "@mui/material";
+import { Box, TextField, Button, FormLabel, Dialog } from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -13,7 +6,7 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useState } from "react";
 
-export const CardTechCreate = ({open, handleClose, user}) => {
+export const CardTechCreate = ({ open, handleClose, user }) => {
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
   });
@@ -31,16 +24,15 @@ export const CardTechCreate = ({open, handleClose, user}) => {
 
   const handleSignUp = (data) => {
     const newData = { ...data, status: status };
-    handleClose()
-    console.log(newData); 
-  };
-
-  /* const createTech = () => {
+    const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
+    handleClose();
     api
-      .post(`/users/techs`, { title: "React", status: "Iniciante" })
+      .post(`/users/techs`, newData, {
+        headers: { Authorization: `Bearer  ${token}` },
+      })
       .then((response) => console.log(response.data))
       .catch((err) => console.log(err));
-  }; */
+  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -73,9 +65,8 @@ export const CardTechCreate = ({open, handleClose, user}) => {
         <Button type="submit" fullWidth variant="contained">
           Cadastrar
         </Button>
-      
+
         <Button onClick={handleClose}>Cancel</Button>
-      
       </Box>
     </Dialog>
   );
