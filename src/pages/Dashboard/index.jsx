@@ -60,7 +60,12 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
   };
 
   return (
-    <Container component="main">
+    <Container
+      component="main"
+      sx={{
+        minWidth: "428px",
+      }}
+    >
       <Grid container spacing={4} alignItems={"stretch"}>
         <Grid item xs={12}>
           <Paper>
@@ -74,7 +79,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={4}>
           <Paper
             sx={{
               height: "100%",
@@ -82,11 +87,13 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           >
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography>Minhas Tecnologias</Typography>
+                <Typography component="h3" variant="h3">
+                  Minhas Tecnologias
+                </Typography>
               </Grid>
               <Grid item>
                 <IconButton onClick={handleClickOpen}>
-                  <BsFillPlusSquareFill color={"green"} />
+                  <BsFillPlusSquareFill color={"#11995E"} />
                 </IconButton>
               </Grid>
             </Grid>
@@ -104,7 +111,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={4}>
           <Paper
             sx={{
               height: "100%",
@@ -113,7 +120,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             Meus Trabalhos
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={4}>
           <Paper
             sx={{
               height: "100%",

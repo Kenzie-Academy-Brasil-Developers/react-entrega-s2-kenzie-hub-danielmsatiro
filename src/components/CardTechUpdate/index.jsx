@@ -1,4 +1,13 @@
-import { Box, TextField, Button, FormLabel, Dialog } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  FormLabel,
+  Dialog,
+  Grid,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -61,8 +70,32 @@ export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <Box component="div">
-        <TextField margin="normal" fullWidth disabled label={tech.title} />
+      <Box
+        component="div"
+        sx={{
+          minWidth: "394px",
+          padding: 2,
+        }}
+      >
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Typography component="h4" variant="h4">
+              Atualizar Tecnologia
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={handleClose}>
+              <Typography color={"gray"}> X </Typography>
+            </IconButton>
+          </Grid>
+        </Grid>
+        <TextField
+          margin="normal"
+          fullWidth
+          disabled
+          label={"Nome da Tech"}
+          value={tech.title}
+        />
 
         <FormLabel component="legend">Selecionar status:</FormLabel>
         <ToggleButtonGroup
@@ -79,15 +112,32 @@ export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
           <ToggleButton value="Intermediário">Intermediário</ToggleButton>
           <ToggleButton value="Avançado">Avançado</ToggleButton>
         </ToggleButtonGroup>
-
-        <Button onClick={() => handleUpdate(tech.tech_id)} variant="contained">
-          Salvar Alterações
-        </Button>
-        <Button onClick={() => deleteTech(tech.tech_id)} variant="contained">
-          Excluir
-        </Button>
-
-        <Button onClick={handleClose}>Cancel</Button>
+        <Grid container xs={12} spacing={1} sx={{ mt: 1 }}>
+          <Grid item xs={6}>
+            <Button
+              onClick={() => handleUpdate(tech.tech_id)}
+              variant="contained"
+              color="secondary"
+              sx={{
+                backgroundColor: "#11995E",
+                width: "100%",
+              }}
+            >
+              Salvar Alterações
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              onClick={() => deleteTech(tech.tech_id)}
+              variant="contained"
+              sx={{
+                width: "100%",
+              }}
+            >
+              Excluir
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Dialog>
   );

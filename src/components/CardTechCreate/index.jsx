@@ -1,4 +1,13 @@
-import { Box, TextField, Button, FormLabel, Dialog } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  FormLabel,
+  Dialog,
+  Grid,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -26,7 +35,7 @@ export const CardTechCreate = ({ open, setOpen, updateUser }) => {
   };
 
   const handleChange = (event, newStatus) => {
-    if(newStatus !==null) {
+    if (newStatus !== null) {
       setStatus(newStatus);
     }
   };
@@ -46,7 +55,26 @@ export const CardTechCreate = ({ open, setOpen, updateUser }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <Box onSubmit={handleSubmit(handleSignUp)} component="form">
+      <Box
+        sx={{
+          minWidth: "394px",
+          padding: 2,
+        }}
+        onSubmit={handleSubmit(handleSignUp)}
+        component="form"
+      >
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Typography component="h4" variant="h4">
+              Cadastrar Tecnologia
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={handleClose}>
+              <Typography color={"gray"}> X </Typography>
+            </IconButton>
+          </Grid>
+        </Grid>
         <TextField
           {...register("title")}
           margin="normal"
@@ -72,11 +100,9 @@ export const CardTechCreate = ({ open, setOpen, updateUser }) => {
           <ToggleButton value="Avançado">Avançado</ToggleButton>
         </ToggleButtonGroup>
 
-        <Button type="submit" fullWidth variant="contained">
+        <Button sx={{ mt: 2 }} type="submit" fullWidth variant="contained">
           Cadastrar
         </Button>
-
-        <Button onClick={handleClose}>Cancel</Button>
       </Box>
     </Dialog>
   );

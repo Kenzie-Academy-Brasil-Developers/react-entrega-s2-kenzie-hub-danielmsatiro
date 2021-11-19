@@ -1,4 +1,4 @@
-import { Grid, Typography, styled, ButtonBase } from "@mui/material";
+import { Grid, Typography, styled, ButtonBase, Box } from "@mui/material";
 import { useState } from "react";
 import { FiCodesandbox } from "react-icons/fi";
 
@@ -21,7 +21,7 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
   }));
   return (
     <ButtonBase
-      onMouseOver={() => setColor("green")}
+      onMouseOver={() => setColor("#11995E")}
       onMouseOut={() => setColor("#E7F5EF")}
       onClick={() => handleUpdate(id, title, status)}
       sx={{
@@ -29,20 +29,33 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
         /* "&:hover": ()=>setColor("green")  */
       }}
     >
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item>
           <Icon>
             <FiCodesandbox
               size={30}
-              color={color === "#E7F5EF" ? "green" : "white"}
+              color={color === "#E7F5EF" ? "#11995E" : "white"}
             />
           </Icon>
         </Grid>
         <Grid item xs>
           <Grid container justifyContent="space-between">
             <Grid item>
-              <Typography>{title}</Typography>
-              <Typography>{status}</Typography>
+              <Typography component="h4" variant="h4">
+                {title}
+              </Typography>
+              <Box
+                sx={{
+                  backgroundColor: "#E7F5EF",
+                  padding: 1,
+                  borderRadius: 1,
+                  width: "99px",
+                }}
+              >
+                <Typography variant="body1" color="#11995E">
+                  {status}
+                </Typography>
+              </Box>
             </Grid>
             <Grid item>
               <Border></Border>

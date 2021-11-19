@@ -160,7 +160,7 @@ export const Signup = () => {
           helperText={errors.confirm_password?.message}
           error={!!errors.confirm_password?.message}
         />
-        <Button type="submit" fullWidth secundary variant="contained">
+        <Button type="submit" color="secondary" fullWidth variant="contained">
           Cadastrar
         </Button>
       </Box>

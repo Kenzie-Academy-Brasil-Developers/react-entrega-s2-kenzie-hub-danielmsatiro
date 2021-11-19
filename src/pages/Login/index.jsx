@@ -88,6 +88,7 @@ export const Login = ({ authenticated, setAuthenticated }) => {
           onClick={() => history.push("/signup")}
           fullWidth
           variant="contained"
+          color="grey"
           sx={{ mt: 2 }}
         >
           Cadastrar

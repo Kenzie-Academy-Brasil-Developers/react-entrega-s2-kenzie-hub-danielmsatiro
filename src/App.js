@@ -44,6 +44,10 @@ const theme = createTheme({
     caption: {
       fontSize: "12px",
     },
+    button: {
+      fontSize: "12px",
+      textTransform: "capitalize",
+    },
   },
 });
 
