@@ -1,9 +1,15 @@
-import { Grid, Typography, styled, ButtonBase, Box } from "@mui/material";
-import { useState } from "react";
+import {
+  Grid,
+  Typography,
+  /* styled, */ ButtonBase,
+  Chip,
+  Box,
+} from "@mui/material";
+/* import { useState } from "react"; */
 import { FiCodesandbox } from "react-icons/fi";
 
 export const Technologies = ({ id, title, status, handleUpdate }) => {
-  const [color, setColor] = useState("#E7F5EF");
+  /*   const [color, setColor] = useState("#E7F5EF");
   const Border = styled("div")(() => ({
     width: 4,
     height: 77,
@@ -18,47 +24,72 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  }));
+  })); */
   return (
     <ButtonBase
-      onMouseOver={() => setColor("#11995E")}
-      onMouseOut={() => setColor("#E7F5EF")}
+      /* onMouseOver={() => setColor("#11995E")}
+      onMouseOut={() => setColor("#E7F5EF")} */
       onClick={() => handleUpdate(id, title, status)}
       sx={{
         width: "100%",
-        /* "&:hover": ()=>setColor("green")  */
+        /* "&:hover .hover-tech": {
+          backgroundColor: "#11995E"
+        }, */
+        "&:hover .hover-tech--light": {
+          color: "#E7F5EF",
+          backgroundColor: "#11995E",
+        },
       }}
     >
       <Grid container spacing={2}>
         <Grid item>
-          <Icon>
+          <Box
+            sx={{
+              width: 71,
+              height: 77,
+              borderRadius: 5,
+              backgroundColor: "#E7F5EF",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            className="hover-tech"
+          >
             <FiCodesandbox
+              className="hover-tech--light"
               size={30}
-              color={color === "#E7F5EF" ? "#11995E" : "white"}
+              sx={{
+                color: "#11995E",
+              }}
             />
-          </Icon>
+          </Box>
         </Grid>
         <Grid item xs>
           <Grid container justifyContent="space-between">
             <Grid item>
-              <Typography component="h4" variant="h4">
+              <Typography
+                sx={{ textAlign: "left" }}
+                component="h4"
+                variant="h4"
+              >
                 {title}
               </Typography>
-              <Box
+              <Chip
+                label={status}
                 sx={{
                   backgroundColor: "#E7F5EF",
                   padding: 1,
                   borderRadius: 1,
                   width: "99px",
+                  color: "#11995E",
                 }}
-              >
-                <Typography variant="body1" color="#11995E">
-                  {status}
-                </Typography>
-              </Box>
+              />
             </Grid>
             <Grid item>
-              <Border></Border>
+              <Box
+                className="hover-tech"
+                sx={{ width: 4, height: 77, backgroundColor: "#E7F5EF" }}
+              ></Box>
             </Grid>
           </Grid>
         </Grid>
