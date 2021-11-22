@@ -76,7 +76,7 @@ export const Signup = () => {
   /* const history = useHistory(); */
 
   return (
-    <Container component="main" sx={{ maxWidth: 500 }}>
+    <Container component="main" maxWidth="sm">
       <Box
         component="div"
         sx={{
