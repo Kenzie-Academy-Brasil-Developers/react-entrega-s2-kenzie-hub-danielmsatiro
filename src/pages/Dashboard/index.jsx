@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Container,
   Grid,
-  Paper,
-  Box,
+  Card,
   Avatar,
   Typography,
   IconButton,
@@ -66,9 +65,10 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
         minWidth: "428px",
       }}
     >
+      {/* header */}
       <Grid container spacing={4} alignItems={"stretch"}>
         <Grid item xs={12}>
-          <Paper>
+          <Card sx={{ padding: "22px" }}>
             <Grid container justifyContent="space-between">
               <Grid item>
                 <img width={150} alt="logo" src={Logo} />
@@ -77,23 +77,32 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 <Avatar alt="" src={user.avatar_url} />
               </Grid>
             </Grid>
-          </Paper>
+          </Card>
         </Grid>
+
         <Grid item xs={12} md={4}>
-          <Paper
+          <Card
             sx={{
               height: "100%",
+              padding: "22px",
             }}
           >
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography component="h3" variant="h3">
+                <Typography
+                  sx={{ lineHeight: "2" }}
+                  component="h3"
+                  variant="h3"
+                >
                   Minhas Tecnologias
                 </Typography>
               </Grid>
               <Grid item>
                 <IconButton onClick={handleClickOpen}>
-                  <BsFillPlusSquareFill color={"#11995E"} />
+                  <BsFillPlusSquareFill
+                    sx={{ lineHeight: "2" }}
+                    color={"#11995E"}
+                  />
                 </IconButton>
               </Grid>
             </Grid>
@@ -109,19 +118,19 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 </Grid>
               ))}
             </Grid>
-          </Paper>
+          </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper
+          <Card
             sx={{
               height: "100%",
             }}
           >
             Meus Trabalhos
-          </Paper>
+          </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper
+          <Card
             sx={{
               height: "100%",
             }}
@@ -133,7 +142,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             <Typography>E-mail</Typography>
             <Typography>{user.email}</Typography>
             <Button onClick={() => logOut()}>Sair</Button>
-          </Paper>
+          </Card>
         </Grid>
       </Grid>
       <CardTechCreate open={open} setOpen={setOpen} updateUser={updateUser} />
