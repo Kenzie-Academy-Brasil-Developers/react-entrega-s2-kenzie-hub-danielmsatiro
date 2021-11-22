@@ -14,7 +14,8 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useHistory } from "react-router";
+/* import { useHistory } from "react-router"; */
+import { CardSignupSuccess } from "../../components/CardSignupSuccess";
 
 export const Signup = () => {
   const schema = yup.object().shape({
@@ -52,6 +53,9 @@ export const Signup = () => {
     }
   };
 
+  /* Abre o CardSignupSuccess */
+  const [open, setOpen] = useState(false);
+
   const handleSignUp = (data) => {
     const newData = { ...data, course_module: module };
     delete newData.confirm_password;
@@ -59,12 +63,9 @@ export const Signup = () => {
     api
       .post("/users", newData)
       .then((response) => {
-        /* Incluir resposta de sucesso com link para
-          direcionar o usuário para o login.
-          Em caso de sucesso, setar o usuário como autenticado*/
-        console.log(response.data);
-        toast.success("Yeesss! Tudo certinho!");
-        return history.push(`/`);
+        /* toast.success("Yeesss! Tudo certinho!"); */
+        setOpen(true);
+        /* return history.push(`/`); */
       })
       .catch((err) => {
         /* Incluir resposta para o usuário caso dê errado */
@@ -72,7 +73,7 @@ export const Signup = () => {
       });
   };
 
-  const history = useHistory();
+  /* const history = useHistory(); */
 
   return (
     <Container component="main" sx={{ maxWidth: 500 }}>
@@ -164,6 +165,7 @@ export const Signup = () => {
           Cadastrar
         </Button>
       </Box>
+      <CardSignupSuccess open={open} setOpen={setOpen} />
     </Container>
   );
 };
