@@ -15,7 +15,7 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useEffect, useState } from "react";
 
-export const CardTechUpdate = ({ open, setOpen, updateUser, tech }) => {
+export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
   /* const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
   }); */

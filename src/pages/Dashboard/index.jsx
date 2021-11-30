@@ -12,26 +12,28 @@ import {
 import { Technologies } from "../../components/Technologies";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { api } from "../../services/api";
-import { CardTechCreate } from "../../components/CardTechCreate";
+import { CardCreate } from "../../components/CardCreate";
 import Logo from "../../assets/logo.svg";
-import { CardTechUpdate } from "../../components/CardTechUpdate";
+import { CardUpdate } from "../../components/CardUpdate";
 
 export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const [user, setUser] = useState({});
 
-  /* Abre o CardTechCreate */
+  /* Abre o CardCreate */
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const [type, setType] = useState("");
+  const handleClickOpen = (type) => {
     setOpen(true);
+    setType(type);
   };
 
-  /* Abre o CardTechUpdate */
+  /* Abre o CardUpdate */
   const [tech, setTech] = useState({});
   const [openTech, setOpenTech] = useState(false);
   const handleUpdate = (tech_id, title, status) => {
     setTech({ tech_id, title, status });
     setOpenTech(true);
-    /* aqui eu abro o cardTechUpdate e lá dentro eu faço a requisição */
+    /* aqui eu abro o cardUpdate e lá dentro eu faço a requisição */
   };
 
   /* Atualiza o state user */
@@ -98,7 +100,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={() => handleClickOpen("tech")}>
                   <BsFillPlusSquareFill
                     sx={{ lineHeight: "2" }}
                     color={"#11995E"}
@@ -124,9 +126,28 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           <Card
             sx={{
               height: "100%",
+              padding: "22px",
             }}
           >
-            Meus Trabalhos
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography
+                  sx={{ lineHeight: "2" }}
+                  component="h3"
+                  variant="h3"
+                >
+                  Meus Trabalhos
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton onClick={() => handleClickOpen("job")}>
+                  <BsFillPlusSquareFill
+                    sx={{ lineHeight: "2" }}
+                    color={"#403CAA"}
+                  />
+                </IconButton>
+              </Grid>
+            </Grid>
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -145,9 +166,14 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           </Card>
         </Grid>
       </Grid>
-      <CardTechCreate open={open} setOpen={setOpen} updateUser={updateUser} />
+      <CardCreate
+        open={open}
+        setOpen={setOpen}
+        updateUser={updateUser}
+        type={type}
+      />
       {openTech && (
-        <CardTechUpdate
+        <CardUpdate
           open={openTech}
           setOpen={setOpenTech}
           tech={tech}

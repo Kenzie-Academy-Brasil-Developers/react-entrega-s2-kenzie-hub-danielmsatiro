@@ -3,6 +3,18 @@ import { CssBaseline, createTheme, ThemeProvider } from "@mui/material";
 import { Toaster } from "react-hot-toast";
 
 const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          border: "solid 1px transparent",
+          "&:hover": {
+            border: "solid 1px black",
+          },
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: "#403CAA",
@@ -14,6 +26,10 @@ const theme = createTheme({
       0: "#F5F5F5",
       50: "#999999",
       100: "#333333",
+    },
+    action: {
+      hover: "rgba(0,0,0,0)",
+      hoverOpacity: 0,
     },
   },
   typography: {

@@ -15,9 +15,10 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useState } from "react";
 
-export const CardTechCreate = ({ open, setOpen, updateUser }) => {
+export const CardCreate = ({ open, setOpen, updateUser, type }) => {
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
+    description: yup.string().required("Campo Obrigatório"),
   });
 
   const {
@@ -66,7 +67,7 @@ export const CardTechCreate = ({ open, setOpen, updateUser }) => {
         <Grid container justifyContent="space-between">
           <Grid item>
             <Typography component="h4" variant="h4">
-              Cadastrar Tecnologia
+              {type === "tech" ? "Cadastrar Tecnologia" : "Cadastrar Trabalho"}
             </Typography>
           </Grid>
           <Grid item>
@@ -79,26 +80,40 @@ export const CardTechCreate = ({ open, setOpen, updateUser }) => {
           {...register("title")}
           margin="normal"
           fullWidth
-          label="Nome da Tech"
+          label={type === "tech" ? "Nome da Tech" : "Nome do Trabalho"}
           helperText={errors.title?.message}
           error={!!errors.title?.message}
         />
+        {type === "tech" ? (
+          <>
+            <FormLabel component="legend">Selecionar status:</FormLabel>
+            <ToggleButtonGroup
+              exclusive
+              color="primary"
+              fullWidth
+              onChange={handleChange}
+              value={status}
+            >
+              {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
+              <ToggleButton value="Iniciante">Iniciante</ToggleButton>
+              {/* </Tooltip> */}
 
-        <FormLabel component="legend">Selecionar status:</FormLabel>
-        <ToggleButtonGroup
-          exclusive
-          color="primary"
-          fullWidth
-          onChange={handleChange}
-          value={status}
-        >
-          {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
-          <ToggleButton value="Iniciante">Iniciante</ToggleButton>
-          {/* </Tooltip> */}
-
-          <ToggleButton value="Intermediário">Intermediário</ToggleButton>
-          <ToggleButton value="Avançado">Avançado</ToggleButton>
-        </ToggleButtonGroup>
+              <ToggleButton value="Intermediário">Intermediário</ToggleButton>
+              <ToggleButton value="Avançado">Avançado</ToggleButton>
+            </ToggleButtonGroup>
+          </>
+        ) : (
+          <TextField
+            {...register("description")}
+            margin="normal"
+            fullWidth
+            multiline
+            rows={4}
+            label="Descrição do Trabalho"
+            helperText={errors.description?.message}
+            error={!!errors.description?.message}
+          />
+        )}
 
         <Button sx={{ mt: 2 }} type="submit" fullWidth variant="contained">
           Cadastrar
