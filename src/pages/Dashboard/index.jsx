@@ -9,7 +9,7 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import { Technologies } from "../../components/Technologies";
+import { TechOrWork } from "../../components/TechOrWork";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { api } from "../../services/api";
 import { CardCreate } from "../../components/CardCreate";
@@ -18,6 +18,7 @@ import { CardUpdate } from "../../components/CardUpdate";
 
 export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const [user, setUser] = useState({});
+  console.log(user);
 
   /* Abre o CardCreate */
   const [open, setOpen] = useState(false);
@@ -28,11 +29,12 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
   };
 
   /* Abre o CardUpdate */
-  const [tech, setTech] = useState({});
-  const [openTech, setOpenTech] = useState(false);
-  const handleUpdate = (tech_id, title, status) => {
-    setTech({ tech_id, title, status });
-    setOpenTech(true);
+  const [item, setItem] = useState({});
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const handleUpdate = (id, title, status, description, type) => {
+    setItem({ id, title, status, description });
+    setType(type);
+    setOpenUpdate(true);
     /* aqui eu abro o cardUpdate e lá dentro eu faço a requisição */
   };
 
@@ -70,6 +72,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
       {/* header */}
       <Grid container spacing={4} alignItems={"stretch"}>
         <Grid item xs={12}>
+          techs
           <Card sx={{ padding: "22px" }}>
             <Grid container justifyContent="space-between">
               <Grid item>
@@ -100,7 +103,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <IconButton onClick={() => handleClickOpen("tech")}>
+                <IconButton onClick={() => handleClickOpen("techs")}>
                   <BsFillPlusSquareFill
                     sx={{ lineHeight: "2" }}
                     color={"#11995E"}
@@ -111,11 +114,12 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             <Grid container spacing={1}>
               {user.techs?.map((item) => (
                 <Grid key={item.id} item sx={{ width: "100%" }}>
-                  <Technologies
+                  <TechOrWork
                     title={item.title}
                     status={item.status}
                     id={item.id}
                     handleUpdate={handleUpdate}
+                    type="techs"
                   />
                 </Grid>
               ))}
@@ -140,13 +144,26 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <IconButton onClick={() => handleClickOpen("job")}>
+                <IconButton onClick={() => handleClickOpen("works")}>
                   <BsFillPlusSquareFill
                     sx={{ lineHeight: "2" }}
                     color={"#403CAA"}
                   />
                 </IconButton>
               </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+              {user.works?.map((item) => (
+                <Grid key={item.id} item sx={{ width: "100%" }}>
+                  <TechOrWork
+                    title={item.title}
+                    description={item.description}
+                    id={item.id}
+                    handleUpdate={handleUpdate}
+                    type="works"
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Card>
         </Grid>
@@ -172,12 +189,13 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
         updateUser={updateUser}
         type={type}
       />
-      {openTech && (
+      {openUpdate && (
         <CardUpdate
-          open={openTech}
-          setOpen={setOpenTech}
-          tech={tech}
+          open={openUpdate}
+          setOpen={setOpenUpdate}
+          item={item}
           updateUser={updateUser}
+          type={type}
         />
       )}
     </Container>

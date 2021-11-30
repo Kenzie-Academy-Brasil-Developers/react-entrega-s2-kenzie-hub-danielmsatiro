@@ -3,10 +3,17 @@ import { Grid, Typography, ButtonBase, Chip, Box } from "@mui/material";
 import { FiCodesandbox } from "react-icons/fi";
 import "./style.css";
 
-export const Technologies = ({ id, title, status, handleUpdate }) => {
+export const TechOrWork = ({
+  id,
+  title,
+  status,
+  description,
+  handleUpdate,
+  type,
+}) => {
   return (
     <ButtonBase
-      onClick={() => handleUpdate(id, title, status)}
+      onClick={() => handleUpdate(id, title, status, description, type)}
       sx={{
         width: "100%",
         "&:hover .hover-tech": {
@@ -36,7 +43,7 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
         </Grid>
         <Grid item xs>
           <Grid container justifyContent="space-between">
-            <Grid item>
+            <Grid item xs>
               <Typography
                 sx={{ textAlign: "left" }}
                 component="h4"
@@ -44,17 +51,27 @@ export const Technologies = ({ id, title, status, handleUpdate }) => {
               >
                 {title}
               </Typography>
-              <Chip
-                label={status}
-                sx={{
-                  backgroundColor: "#E7F5EF",
-                  padding: 1,
-                  borderRadius: 1,
-                  width: "99px",
-                  color: "#11995E",
-                  mt: 2,
-                }}
-              />
+              {type === "techs" ? (
+                <Chip
+                  label={status}
+                  sx={{
+                    backgroundColor: "#E7F5EF",
+                    padding: 1,
+                    borderRadius: 1,
+                    width: "99px",
+                    color: "#11995E",
+                    mt: 2,
+                  }}
+                />
+              ) : (
+                <Typography
+                  sx={{ textAlign: "left" }}
+                  component="p"
+                  variant="body2"
+                >
+                  {description}
+                </Typography>
+              )}
             </Grid>
             <Grid item>
               <Box

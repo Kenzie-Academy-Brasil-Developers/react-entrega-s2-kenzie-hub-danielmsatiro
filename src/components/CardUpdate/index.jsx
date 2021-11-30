@@ -13,20 +13,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
-  /* const schema = yup.object().shape({
-    title: yup.string().required("Campo obrigatório"),
-  }); */
+export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
+  const schema = yup.object().shape({
+    description: yup.string().required("Campo obrigatório"),
+  });
 
-  /* const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-  }); */
+  });
+
+  console.log("teste", item);
 
   const handleClose = () => {
     setOpen(false);
@@ -38,13 +40,15 @@ export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
     }
   };
 
-  const [status, setStatus] = useState(tech.status);
+  const [status, setStatus] = useState(item.status);
+  const [description, setDescription] = useState(item.description);
 
   const handleUpdate = (id) => {
-    const data = { status: status };
+    const data =
+      type === "techs" ? { status: status } : { description: description };
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
     api
-      .put(`/users/techs/${id}`, data, {
+      .put(`/users/${type}/${id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -58,7 +62,7 @@ export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
   const deleteTech = (id) => {
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
     api
-      .delete(`/users/techs/${id}`, {
+      .delete(`/users/${type}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -80,7 +84,7 @@ export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
         <Grid container justifyContent="space-between">
           <Grid item>
             <Typography component="h4" variant="h4">
-              Atualizar Tecnologia
+              {type === "techs" ? "Atualizar Tecnologia" : "Atualizar Trabalho"}
             </Typography>
           </Grid>
           <Grid item>
@@ -93,29 +97,42 @@ export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
           margin="normal"
           fullWidth
           disabled
-          label={"Nome da Tech"}
-          value={tech.title}
+          label={type === "techs" ? "Nome da Tecnologia" : "Nome do Trabalho"}
+          value={item.title}
         />
-
-        <FormLabel component="legend">Selecionar status:</FormLabel>
-        <ToggleButtonGroup
-          exclusive
-          color="primary"
-          fullWidth
-          onChange={handleChange}
-          value={status}
-        >
-          {/*  <Tooltip title="Primeiro módulo (Introdução ao Frontend)"> */}
-          <ToggleButton value="Iniciante">Iniciante</ToggleButton>
-          {/* </Tooltip> */}
-
-          <ToggleButton value="Intermediário">Intermediário</ToggleButton>
-          <ToggleButton value="Avançado">Avançado</ToggleButton>
-        </ToggleButtonGroup>
+        {type === "techs" ? (
+          <>
+            <FormLabel component="legend">Selecionar status:</FormLabel>
+            <ToggleButtonGroup
+              exclusive
+              color="primary"
+              fullWidth
+              onChange={handleChange}
+              value={status}
+            >
+              <ToggleButton value="Iniciante">Iniciante</ToggleButton>
+              <ToggleButton value="Intermediário">Intermediário</ToggleButton>
+              <ToggleButton value="Avançado">Avançado</ToggleButton>
+            </ToggleButtonGroup>
+          </>
+        ) : (
+          <TextField
+            {...register("description")}
+            margin="normal"
+            fullWidth
+            multiline
+            rows={4}
+            label="Descrição do Trabalho"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            helperText={errors.description?.message}
+            error={!!errors.description?.message}
+          />
+        )}
         <Grid container xs={12} spacing={1} sx={{ mt: 1 }}>
           <Grid item xs={6}>
             <Button
-              onClick={() => handleUpdate(tech.tech_id)}
+              onClick={() => handleUpdate(item.id)}
               variant="contained"
               color="secondary"
               sx={{
@@ -128,7 +145,7 @@ export const CardUpdate = ({ open, setOpen, updateUser, tech }) => {
           </Grid>
           <Grid item xs={6}>
             <Button
-              onClick={() => deleteTech(tech.tech_id)}
+              onClick={() => deleteTech(item.id)}
               variant="contained"
               sx={{
                 width: "100%",

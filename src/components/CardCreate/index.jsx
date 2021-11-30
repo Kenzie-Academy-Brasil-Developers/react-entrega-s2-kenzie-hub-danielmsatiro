@@ -42,10 +42,13 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
   };
 
   const handleSignUp = (data) => {
-    const newData = { ...data, status: status };
+    const newData =
+      type === "techs"
+        ? { ...data, status: status }
+        : { ...data, deploy_url: "https://kenziehub.me" };
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
     api
-      .post(`/users/techs`, newData, {
+      .post(`/users/${type}`, newData, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => updateUser())
@@ -67,7 +70,7 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
         <Grid container justifyContent="space-between">
           <Grid item>
             <Typography component="h4" variant="h4">
-              {type === "tech" ? "Cadastrar Tecnologia" : "Cadastrar Trabalho"}
+              {type === "techs" ? "Cadastrar Tecnologia" : "Cadastrar Trabalho"}
             </Typography>
           </Grid>
           <Grid item>
@@ -80,11 +83,11 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
           {...register("title")}
           margin="normal"
           fullWidth
-          label={type === "tech" ? "Nome da Tech" : "Nome do Trabalho"}
+          label={type === "techs" ? "Nome da Tecnologia" : "Nome do Trabalho"}
           helperText={errors.title?.message}
           error={!!errors.title?.message}
         />
-        {type === "tech" ? (
+        {type === "techs" ? (
           <>
             <FormLabel component="legend">Selecionar status:</FormLabel>
             <ToggleButtonGroup
