@@ -42,8 +42,12 @@ export const TechOrWork = ({
           </Box>
         </Grid>
         <Grid item xs>
-          <Grid container justifyContent="space-between">
-            <Grid item xs>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{ flexWrap: "nowrap" }}
+          >
+            <Grid item>
               <Typography
                 sx={{ textAlign: "left" }}
                 component="h4"
@@ -75,7 +79,7 @@ export const TechOrWork = ({
             </Grid>
             <Grid item>
               <Box
-                className="hover-tech"
+                className={type === "techs" ? "hover-tech" : "hover-works"}
                 sx={{ width: 4, height: 77, backgroundColor: "#E7F5EF" }}
               ></Box>
             </Grid>

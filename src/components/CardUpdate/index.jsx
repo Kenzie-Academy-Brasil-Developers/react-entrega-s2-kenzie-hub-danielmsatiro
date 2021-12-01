@@ -17,12 +17,12 @@ import { useState } from "react";
 
 export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
   const schema = yup.object().shape({
+    title: yup.string().required("Campo obrigatório"),
     description: yup.string().required("Campo obrigatório"),
   });
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -40,12 +40,15 @@ export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
     }
   };
 
+  const [title, setTitle] = useState(item.title);
   const [status, setStatus] = useState(item.status);
   const [description, setDescription] = useState(item.description);
 
   const handleUpdate = (id) => {
     const data =
-      type === "techs" ? { status: status } : { description: description };
+      type === "techs"
+        ? { status: status }
+        : { title: title, description: description };
     const token = JSON.parse(localStorage.getItem("@Kenziehub:token"));
     api
       .put(`/users/${type}/${id}`, data, {
@@ -96,9 +99,12 @@ export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
         <TextField
           margin="normal"
           fullWidth
-          disabled
+          disabled={type === "techs"}
           label={type === "techs" ? "Nome da Tecnologia" : "Nome do Trabalho"}
-          value={item.title}
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          helperText={errors.title?.message}
+          error={!!errors.title?.message}
         />
         {type === "techs" ? (
           <>

@@ -2,6 +2,7 @@ import { Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Container,
+  Box,
   Grid,
   Card,
   Avatar,
@@ -11,6 +12,8 @@ import {
 } from "@mui/material";
 import { TechOrWork } from "../../components/TechOrWork";
 import { BsFillPlusSquareFill } from "react-icons/bs";
+import { MdOutlineMail } from "react-icons/md";
+import { FiSmartphone } from "react-icons/fi";
 import { api } from "../../services/api";
 import { CardCreate } from "../../components/CardCreate";
 import Logo from "../../assets/logo.svg";
@@ -18,7 +21,6 @@ import { CardUpdate } from "../../components/CardUpdate";
 
 export const Dashboard = ({ authenticated, setAuthenticated }) => {
   const [user, setUser] = useState({});
-  console.log(user);
 
   /* Abre o CardCreate */
   const [open, setOpen] = useState(false);
@@ -70,10 +72,15 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
       }}
     >
       {/* header */}
-      <Grid container spacing={4} alignItems={"stretch"}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
-          techs
-          <Card sx={{ padding: "22px" }}>
+          <Card
+            sx={{
+              padding: "22px",
+              marginTop: "10px",
+              boxShadow: "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",
+            }}
+          >
             <Grid container justifyContent="space-between">
               <Grid item>
                 <img width={150} alt="logo" src={Logo} />
@@ -171,14 +178,38 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
           <Card
             sx={{
               height: "100%",
+              borderRadius: "10px",
             }}
           >
-            <Typography>{user.name}</Typography>
-            <Typography>{user.course_module}</Typography>
-            <Typography>contato</Typography>
-            <Typography>{user.contact}</Typography>
-            <Typography>E-mail</Typography>
-            <Typography>{user.email}</Typography>
+            <Grid container>
+              <Grid item>
+                <Avatar alt="" src={user.avatar_url} />
+              </Grid>
+              <Grid item>
+                <Typography>{user.name}</Typography>
+                <Typography>{user.course_module}</Typography>
+              </Grid>
+            </Grid>
+            <Box>
+              <Grid container>
+                <Grid item>
+                  <FiSmartphone />
+                </Grid>
+                <Grid item>
+                  <Typography>contato</Typography>
+                  <Typography>{user.contact}</Typography>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item>
+                  <MdOutlineMail />
+                </Grid>
+                <Grid item>
+                  <Typography>E-mail</Typography>
+                  <Typography>{user.email}</Typography>
+                </Grid>
+              </Grid>
+            </Box>
             <Button onClick={() => logOut()}>Sair</Button>
           </Card>
         </Grid>
