@@ -135,7 +135,7 @@ export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
             error={!!errors.description?.message}
           />
         )}
-        <Grid container xs={12} spacing={1} sx={{ mt: 1 }}>
+        <Grid container spacing={1} sx={{ mt: 1 }}>
           <Grid item xs={6}>
             <Button
               onClick={() => handleUpdate(item.id)}

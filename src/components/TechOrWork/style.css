@@ -5,3 +5,11 @@
 .hover-tech {
   transition: all 0.5s;
 }
+
+.hover-work--light {
+  color: #403caa;
+  transition: all 0.5s;
+}
+.hover-work {
+  transition: all 0.5s;
+}

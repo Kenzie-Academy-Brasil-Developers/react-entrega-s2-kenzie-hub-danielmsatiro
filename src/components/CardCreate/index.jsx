@@ -16,7 +16,11 @@ import { api } from "../../services/api";
 import { useState } from "react";
 
 export const CardCreate = ({ open, setOpen, updateUser, type }) => {
-  const schema = yup.object().shape({
+  const schemaTech = yup.object().shape({
+    title: yup.string().required("Campo obrigatório"),
+  });
+
+  const schemaWork = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
     description: yup.string().required("Campo Obrigatório"),
   });
@@ -26,7 +30,7 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(type === "techs" ? schemaTech : schemaWork),
   });
 
   const [status, setStatus] = useState("Iniciante");
@@ -42,6 +46,7 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
   };
 
   const handleSignUp = (data) => {
+    console.log(data);
     const newData =
       type === "techs"
         ? { ...data, status: status }

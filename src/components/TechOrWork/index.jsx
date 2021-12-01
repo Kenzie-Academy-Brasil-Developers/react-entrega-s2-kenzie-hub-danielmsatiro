@@ -1,6 +1,6 @@
 import { Grid, Typography, ButtonBase, Chip, Box } from "@mui/material";
 /* import { useState } from "react"; */
-import { FiCodesandbox } from "react-icons/fi";
+import { FiCodesandbox, FiGitPullRequest } from "react-icons/fi";
 import "./style.css";
 
 export const TechOrWork = ({
@@ -20,7 +20,13 @@ export const TechOrWork = ({
           backgroundColor: "#11995E",
         },
         "&:hover .hover-tech--light": {
-          color: "#E7F5EF",
+          color: "white",
+        },
+        "&:hover .hover-work": {
+          backgroundColor: "#403CAA",
+        },
+        "&:hover .hover-work--light": {
+          color: "white",
         },
       }}
     >
@@ -36,9 +42,13 @@ export const TechOrWork = ({
               justifyContent: "center",
               alignItems: "center",
             }}
-            className="hover-tech"
+            className={type === "techs" ? "hover-tech" : "hover-work"}
           >
-            <FiCodesandbox className="hover-tech--light" size={30} />
+            {type === "techs" ? (
+              <FiCodesandbox className="hover-tech--light" size={30} />
+            ) : (
+              <FiGitPullRequest className="hover-work--light" size={30} />
+            )}
           </Box>
         </Grid>
         <Grid item xs>
@@ -79,7 +89,7 @@ export const TechOrWork = ({
             </Grid>
             <Grid item>
               <Box
-                className={type === "techs" ? "hover-tech" : "hover-works"}
+                className={type === "techs" ? "hover-tech" : "hover-work"}
                 sx={{ width: 4, height: 77, backgroundColor: "#E7F5EF" }}
               ></Box>
             </Grid>

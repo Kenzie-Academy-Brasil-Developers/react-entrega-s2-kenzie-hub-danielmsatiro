@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { TechOrWork } from "../../components/TechOrWork";
 import { BsFillPlusSquareFill } from "react-icons/bs";
-import { MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail, MdStayPrimaryLandscape } from "react-icons/md";
 import { FiSmartphone } from "react-icons/fi";
 import { api } from "../../services/api";
 import { CardCreate } from "../../components/CardCreate";
@@ -69,6 +69,8 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
       component="main"
       sx={{
         minWidth: "428px",
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
       }}
     >
       {/* header */}
@@ -81,12 +83,16 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
               boxShadow: "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <Grid container justifyContent="space-between">
+            <Grid container justifyContent="space-between" alignItems="center">
               <Grid item>
                 <img width={150} alt="logo" src={Logo} />
               </Grid>
               <Grid item>
-                <Avatar alt="" src={user.avatar_url} />
+                <Avatar
+                  sx={{ width: "50px", height: "50px" }}
+                  alt=""
+                  src={user.avatar_url}
+                />
               </Grid>
             </Grid>
           </Card>
@@ -97,6 +103,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             sx={{
               height: "100%",
               padding: "22px",
+              boxShadow: "none",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -138,6 +145,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             sx={{
               height: "100%",
               padding: "22px",
+              boxShadow: "none",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -179,38 +187,91 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
             sx={{
               height: "100%",
               borderRadius: "10px",
+              boxShadow: "none",
             }}
           >
-            <Grid container>
+            <Grid
+              container
+              alignItems="center"
+              sx={{
+                paddingLeft: "22px",
+                backgroundColor: "#403CAA",
+                width: "100%",
+                height: "104px",
+                flexWrap: "noWrap",
+              }}
+            >
               <Grid item>
-                <Avatar alt="" src={user.avatar_url} />
+                <Avatar
+                  sx={{ height: 80, width: 80 }}
+                  alt=""
+                  src={user.avatar_url}
+                />
               </Grid>
-              <Grid item>
-                <Typography>{user.name}</Typography>
-                <Typography>{user.course_module}</Typography>
+              <Grid item sx={{ paddingLeft: 1 }}>
+                <Typography variant={"h4"} color="white">
+                  {user.name}
+                </Typography>
+                <Typography variant={"caption"} color="white">
+                  {user.course_module}
+                </Typography>
               </Grid>
             </Grid>
-            <Box>
-              <Grid container>
-                <Grid item>
-                  <FiSmartphone />
+            <Grid container sx={{ padding: "22px" }}>
+              <Grid container sx={{ mt: 2 }}>
+                <Grid
+                  item
+                  sx={{
+                    width: "50px",
+                    height: "45px",
+                    borderRadius: "2px",
+                    backgroundColor: "#403CAA",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <FiSmartphone color="white" size="20" />
                 </Grid>
-                <Grid item>
-                  <Typography>contato</Typography>
+                <Grid item sx={{ paddingLeft: 1, paddingRight: 1 }}>
+                  <Typography fontWeight="bold" variant={"body1"}>
+                    Contato
+                  </Typography>
                   <Typography>{user.contact}</Typography>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item>
-                  <MdOutlineMail />
+              <Grid container sx={{ mt: 2 }}>
+                <Grid
+                  item
+                  sx={{
+                    width: "50px",
+                    height: "45px",
+                    borderRadius: "2px",
+                    backgroundColor: "#11995E",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <MdOutlineMail color="white" size="20" />
                 </Grid>
-                <Grid item>
-                  <Typography>E-mail</Typography>
+                <Grid item sx={{ paddingLeft: 1 }}>
+                  <Typography fontWeight="bold" variant={"body1"}>
+                    E-mail
+                  </Typography>
                   <Typography>{user.email}</Typography>
                 </Grid>
               </Grid>
-            </Box>
-            <Button onClick={() => logOut()}>Sair</Button>
+              <Button
+                onClick={() => logOut()}
+                fullWidth
+                variant="contained"
+                color="grey"
+                sx={{ mt: 2 }}
+              >
+                Sair
+              </Button>
+            </Grid>
           </Card>
         </Grid>
       </Grid>
