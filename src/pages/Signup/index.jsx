@@ -1,11 +1,4 @@
-import {
-  Container,
-  Box,
-  TextField,
-  Button,
-  FormLabel,
-  Tooltip,
-} from "@mui/material";
+import { Container, Box, TextField, Button, FormLabel } from "@mui/material";
 import Logo from "../../assets/logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,7 +7,6 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { api } from "../../services/api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-/* import { useHistory } from "react-router"; */
 import { CardSignupSuccess } from "../../components/CardSignupSuccess";
 
 export const Signup = () => {
@@ -72,8 +64,6 @@ export const Signup = () => {
         toast.error("Ops! Alguém já deve ter esse E-mail...");
       });
   };
-
-  /* const history = useHistory(); */
 
   return (
     <Container component="main" maxWidth="sm">

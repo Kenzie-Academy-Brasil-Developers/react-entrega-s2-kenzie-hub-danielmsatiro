@@ -1,8 +1,6 @@
-import { Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Container,
-  Box,
   Grid,
   Card,
   Avatar,
@@ -12,14 +10,17 @@ import {
 } from "@mui/material";
 import { TechOrWork } from "../../components/TechOrWork";
 import { BsFillPlusSquareFill } from "react-icons/bs";
-import { MdOutlineMail, MdStayPrimaryLandscape } from "react-icons/md";
+import { MdOutlineMail } from "react-icons/md";
 import { FiSmartphone } from "react-icons/fi";
 import { api } from "../../services/api";
 import { CardCreate } from "../../components/CardCreate";
 import Logo from "../../assets/logo.svg";
 import { CardUpdate } from "../../components/CardUpdate";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { logOutThunk } from "../../store/modules/user/thunks";
 
-export const Dashboard = ({ authenticated, setAuthenticated }) => {
+export const Dashboard = () => {
   const [user, setUser] = useState({});
 
   /* Abre o CardCreate */
@@ -42,9 +43,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
 
   /* Atualiza o state user */
   const updateUser = () => {
-    const userId = JSON.parse(
-      localStorage.getItem("@Kenziehub:id", JSON.stringify("@kenziehub:id"))
-    );
+    const userId = JSON.parse(localStorage.getItem("@Kenziehub:id"));
     api.get(`/users/${userId}`).then((response) => {
       setUser(response.data);
     });
@@ -55,13 +54,14 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
     updateUser();
   }, []);
 
-  if (!authenticated) {
+  /* if (!authenticated) {
     return <Redirect to="/" />;
-  }
+  } */
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const logOut = () => {
-    localStorage.clear();
-    setAuthenticated(false);
+  const handleLogOut = () => {
+    dispatch(logOutThunk(history));
   };
 
   return (
@@ -263,7 +263,7 @@ export const Dashboard = ({ authenticated, setAuthenticated }) => {
                 </Grid>
               </Grid>
               <Button
-                onClick={() => logOut()}
+                onClick={() => handleLogOut()}
                 fullWidth
                 variant="contained"
                 color="grey"

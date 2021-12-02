@@ -28,8 +28,6 @@ export const CardUpdate = ({ open, setOpen, updateUser, item, type }) => {
     resolver: yupResolver(schema),
   });
 
-  console.log("teste", item);
-
   const handleClose = () => {
     setOpen(false);
   };

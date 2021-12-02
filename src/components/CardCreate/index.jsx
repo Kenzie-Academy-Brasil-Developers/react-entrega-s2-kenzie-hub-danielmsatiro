@@ -46,7 +46,6 @@ export const CardCreate = ({ open, setOpen, updateUser, type }) => {
   };
 
   const handleSignUp = (data) => {
-    console.log(data);
     const newData =
       type === "techs"
         ? { ...data, status: status }

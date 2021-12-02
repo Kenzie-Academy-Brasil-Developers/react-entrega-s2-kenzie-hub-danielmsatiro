@@ -3,10 +3,11 @@ import Logo from "../../assets/logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { api } from "../../services/api";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { signInThunk } from "../../store/modules/user/thunks";
 
-export const Login = ({ authenticated, setAuthenticated }) => {
+export const Login = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -18,6 +19,9 @@ export const Login = ({ authenticated, setAuthenticated }) => {
       .required("Campo obrigatório"),
   });
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const {
     register,
     handleSubmit,
@@ -27,28 +31,8 @@ export const Login = ({ authenticated, setAuthenticated }) => {
   });
 
   const handleSignIn = (data) => {
-    api
-      .post("/sessions", data)
-      .then((response) => {
-        const { token, user } = response.data;
-
-        localStorage.clear();
-
-        localStorage.setItem("@Kenziehub:token", JSON.stringify(token));
-        localStorage.setItem("@Kenziehub:id", JSON.stringify(user.id));
-
-        setAuthenticated(true);
-
-        return history.push(`/dashboard`);
-      })
-      .catch((err) => console.log(err));
+    dispatch(signInThunk(data, history));
   };
-
-  const history = useHistory();
-
-  if (authenticated) {
-    return <Redirect to={`/dashboard`} />;
-  }
 
   return (
     <Container component="main" maxWidth="sm">
