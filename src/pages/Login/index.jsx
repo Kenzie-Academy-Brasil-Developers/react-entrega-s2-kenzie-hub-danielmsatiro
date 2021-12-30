@@ -4,10 +4,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
-import { signInThunk } from "../../store/modules/user/thunks";
+/* import { useDispatch } from "react-redux"; */
+import { useAuth } from "../../providers/user";
+import { useState } from "react";
+import { toast } from "react-toastify";
+/* import { signInThunk } from "../../store/modules/user/thunks"; */
 
 export const Login = () => {
+  const [loading, setLoading] = useState(false);
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -19,7 +23,7 @@ export const Login = () => {
       .required("Campo obrigatório"),
   });
 
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch(); */
   const history = useHistory();
 
   const {
@@ -30,8 +34,19 @@ export const Login = () => {
     resolver: yupResolver(schema),
   });
 
+  const { signIn } = useAuth();
+
   const handleSignIn = (data) => {
-    dispatch(signInThunk(data, history));
+    /* dispatch(signInThunk(data, history)); */
+    setLoading(true);
+
+    signIn(data)
+      .then((_) => setLoading(false))
+      .catch((err) => {
+        toast.error("Email ou senha inválida");
+        console.log("erro no componente");
+        setLoading(false);
+      });
   };
 
   return (

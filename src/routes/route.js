@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
+/* import { useSelector } from "react-redux"; */
 import { Redirect, Route as ReactDOMRoute } from "react-router";
+import { useAuth } from "../providers/user";
 
 export const Route = ({ isPrivate = false, componet: Component, ...rest }) => {
-  const { token } = useSelector((store) => store.user);
+  /* const { token } = useSelector((store) => store.user); */
+  const { token } = useAuth();
 
   /*  a rota é privada e usuário não tá logado = login 
         rota privada usuário logado = ok

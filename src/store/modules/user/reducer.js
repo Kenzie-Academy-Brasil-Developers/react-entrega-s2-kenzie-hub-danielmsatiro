@@ -1,4 +1,4 @@
-import { LOG_OUT, SIGN_IN } from "./actionTypes";
+/* import { LOG_OUT, SIGN_IN } from "./actionTypes";
 
 const userId = localStorage.getItem("@Kenziehub:id") || "";
 const token = localStorage.getItem("@Kenziehub:token") || "";
@@ -23,4 +23,4 @@ const userReducer = (state = defaultState, action) => {
   }
 };
 
-export default userReducer;
+export default userReducer; */

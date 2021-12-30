@@ -1,11 +1,9 @@
-/* import { useHistory } from "react-router"; */
-import { api } from "../../../services/api";
+/* import { api } from "../../../services/api";
 import { logOut, signIn } from "./actions";
 import { toast } from "react-toastify";
 
 export const signInThunk = (userData, history) => (dispatch, getState) => {
-  /* const history = useHistory(); */
-  api
+   api
     .post("/sessions", userData)
     .then((response) => {
       const { token, user } = response.data;
@@ -31,4 +29,4 @@ export const logOutThunk = (history) => (dispatch, getState) => {
 
 export const updateProfile = (userId, userData, token) => (dispatch) => {
   api.patch(`/users/${userId}`, userData);
-};
+}; */

@@ -17,8 +17,9 @@ import { CardCreate } from "../../components/CardCreate";
 import Logo from "../../assets/logo.svg";
 import { CardUpdate } from "../../components/CardUpdate";
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
-import { logOutThunk } from "../../store/modules/user/thunks";
+/* import { useDispatch } from "react-redux"; */
+/* import { logOutThunk } from "../../store/modules/user/thunks"; */
+import { useAuth } from "../../providers/user";
 
 export const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -58,12 +59,14 @@ export const Dashboard = () => {
     return <Redirect to="/" />;
   } */
   const history = useHistory();
-  const dispatch = useDispatch();
+  /*   const dispatch = useDispatch(); */
 
-  const handleLogOut = () => {
+  const { signOut } = useAuth();
+
+  /*   const handleLogOut = () => {
     dispatch(logOutThunk(history));
   };
-
+ */
   return (
     <Container
       component="main"
@@ -263,7 +266,7 @@ export const Dashboard = () => {
                 </Grid>
               </Grid>
               <Button
-                onClick={() => handleLogOut()}
+                onClick={signOut}
                 fullWidth
                 variant="contained"
                 color="grey"
